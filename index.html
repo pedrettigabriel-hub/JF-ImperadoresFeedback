@@ -22,9 +22,13 @@
   .wrap{max-width:880px;margin:0 auto}
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-  .empty{text-align:center;color:var(--muted);padding:20px;font-size:14px;border:1px dashed var(--line);border-radius:14px;margin-bottom:30px}
+  .empty{text-align:center;color:var(--muted);padding:20px;font-size:14px;line-height:1.5;border:1px dashed var(--line);border-radius:14px;margin-bottom:30px}
   .btn-primary{width:100%;padding:14px;border-radius:10px;background:var(--gold);color:#000;font-weight:700;font-size:15px;margin-top:8px;transition:.2s}
   .btn-primary:hover{filter:brightness(1.1)}
+
+  /* Selo "Novo" (itens que o atleta ainda não viu neste aparelho) */
+  .selo-novo{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+    padding:3px 8px;border-radius:999px;background:var(--gold);color:var(--bg);flex-shrink:0;line-height:1.3}
 
   /* Logo: só aparece depois de carregar (classe .logo-ok no body) */
   .logo{display:none}
@@ -42,12 +46,13 @@
     border:1px solid var(--line);border-radius:var(--radius);padding:16px;transition:.18s}
   .athlete-card:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 12px 30px -12px #000}
   .athlete-card:hover .arrow{color:var(--gold);transform:translateX(4px)}
+  .athlete-card.tem-novo{border-color:#f5c51866}
   .avatar{width:52px;height:52px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
     font-weight:800;font-size:17px;color:var(--bg);letter-spacing:.5px;
     background:linear-gradient(135deg,var(--gold),var(--gold-light))}
   .athlete-info{flex:1;min-width:0}
   .athlete-name{font-weight:700;font-size:16px}
-  .arrow{margin-left:auto;color:var(--muted);font-size:20px;transition:.18s}
+  .arrow{color:var(--muted);font-size:20px;transition:.18s}
 
   .skeleton{height:86px;border-radius:var(--radius);border:1px solid var(--line);
     background:linear-gradient(90deg,var(--card) 0%,var(--card2) 50%,var(--card) 100%);background-size:200% 100%;
@@ -55,45 +60,51 @@
   @keyframes brilho{to{background-position:-200% 0}}
 
   /* ---------- PAINEL DO ATLETA ---------- */
-  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+  .topbar{display:flex;align-items:center;gap:14px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--line)}
   .back{width:42px;height:42px;border-radius:12px;background:var(--card);border:1px solid var(--line);
     display:grid;place-items:center;font-size:18px;color:var(--muted);flex-shrink:0}
   .back:hover{color:var(--gold);border-color:var(--gold)}
   .mini-logo{height:46px;width:auto;margin-left:10px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}
   .id-block{display:flex;align-items:center;gap:12px;margin-left:auto;min-width:0}
   .id-block .avatar{width:46px;height:46px;font-size:15px}
-  .id-block h2{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px}
-  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
-  .stat b{display:block;font-size:26px;line-height:1}
-  .stat small{color:var(--muted);font-size:12px;display:block;margin-top:6px}
-  .val-purple{color:var(--purple)}
+  .id-text{min-width:0}
+  .id-text h2{font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .id-sub{font-size:12px;color:var(--muted);margin-top:2px;white-space:nowrap}
 
   .section-title{font-size:13px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin:0 0 14px 2px;font-weight:700}
 
   /* ---------- DRILLS ---------- */
-  .drills-grid{display:grid;gap:12px;margin-bottom:30px}
+  .drills-grid{display:grid;gap:12px;margin-bottom:32px}
   .drill-card{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);
-    border-radius:var(--radius);padding:14px 16px;transition:.18s;text-align:left}
+    border-radius:var(--radius);padding:10px 14px 10px 10px;transition:.18s;text-align:left}
   .drill-card:hover{border-color:var(--gold);background:var(--card-hover)}
-  .drill-icon{width:44px;height:44px;border-radius:10px;flex-shrink:0;display:grid;place-items:center;font-size:20px;
-    background:var(--card2);color:var(--muted);border:1px solid var(--line)}
-  .drill-icon.yt{background:#ef444422;color:#ff4444;border-color:#ef444444}
-  .drill-icon.ig{background:#a855f722;color:#d946ef;border-color:#a855f744}
+  .drill-thumb{position:relative;width:112px;aspect-ratio:16/9;border-radius:10px;flex-shrink:0;overflow:hidden;
+    display:grid;place-items:center;background:var(--card2) center/cover no-repeat;border:1px solid var(--line)}
+  .drill-thumb.ig{background-image:linear-gradient(135deg,#7c3aed,#db2777 55%,#f59e0b);border:none}
+  .drill-thumb.invalido{color:var(--muted);font-size:20px}
+  .drill-thumb .play{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(0,0,0,.6);color:#fff;transition:.15s}
+  .drill-card:hover .drill-thumb .play{background:var(--gold);color:#000}
   .drill-info{flex:1;min-width:0}
-  .drill-title{font-size:14.5px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .drill-title{font-size:14.5px;font-weight:600;line-height:1.3;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .drill-meta{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap}
   .drill-type{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-  .drill-play{width:32px;height:32px;border-radius:50%;background:var(--line);display:grid;place-items:center;flex-shrink:0;transition:.15s}
-  .drill-card:hover .drill-play{background:var(--gold);color:#000}
 
   /* ---------- FEEDBACKS ---------- */
   .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-  .chip{padding:8px 16px;border-radius:999px;font-size:13px;border:1px solid var(--line);color:var(--muted);background:var(--card);transition:.15s}
-  .chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:700}
+  .chip{padding:8px 14px;border-radius:999px;font-size:13px;border:1px solid var(--line);color:var(--muted);background:var(--card);transition:.15s}
+  .chip-n{margin-left:6px;font-weight:700;opacity:.75}
+  .chip.zero{opacity:.5}
+  .chip.active{background:var(--gold);color:var(--bg);border-color:var(--gold);font-weight:700;opacity:1}
 
   .fb-card{--cat:var(--gold);background:var(--card);border:1px solid var(--line);border-left:4px solid var(--cat);border-radius:14px;padding:18px;margin-bottom:14px}
+  .fb-card.destacado{padding:22px;margin-bottom:32px;border-color:color-mix(in srgb,var(--cat) 45%,var(--line));border-left-color:var(--cat);
+    background:linear-gradient(180deg,color-mix(in srgb,var(--cat) 9%,var(--card)),var(--card));box-shadow:0 18px 40px -24px #000}
+  .fb-card.destacado .fb-title{font-size:18px}
+  .fb-card.destacado .fb-text{font-size:15px}
   .fb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}
+  .fb-tags{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
   .badge{font-size:11px;font-weight:700;padding:5px 11px;border-radius:999px;letter-spacing:.3px;color:var(--cat);
     background:color-mix(in srgb,var(--cat) 13%,transparent);border:1px solid color-mix(in srgb,var(--cat) 33%,transparent)}
   .fb-date{font-size:12px;color:var(--muted);white-space:nowrap}
@@ -126,7 +137,11 @@
   .video-container{position:relative;width:100%;background:#000}
   .video-container iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
   .video-container.yt{aspect-ratio:16/9}
-  .video-container.ig{aspect-ratio:9/16;width:min(100%,45vh);margin:0 auto}
+  .video-container.ig{aspect-ratio:9/16;width:min(100%,40vh);margin:0 auto}
+  .modal-footer{display:flex;justify-content:center;padding:12px 18px;background:var(--card2);border-top:1px solid var(--line)}
+  .btn-externo{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);
+    background:var(--card);color:var(--text);font-weight:600;font-size:14px;text-decoration:none;transition:.15s}
+  .btn-externo:hover{border-color:var(--gold);color:var(--gold)}
 
   /* ---------- TOASTS ---------- */
   .toasts{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2000;pointer-events:none;width:max-content;max-width:calc(100% - 32px)}
@@ -151,6 +166,9 @@
     <button class="btn-close" data-action="fecharVideo" aria-label="Fechar vídeo">×</button>
   </div>
   <div class="video-container" id="videoContainer"></div>
+  <div class="modal-footer">
+    <a class="btn-externo" id="modalLink" target="_blank" rel="noopener noreferrer">Abrir no YouTube ↗</a>
+  </div>
 </dialog>
 
 <div class="toasts" id="toasts" role="status" aria-live="polite"></div>
@@ -167,8 +185,9 @@
 const PLANILHA = 'https://docs.google.com/spreadsheets/d/1BVPQc2Wnff3fRlhoLgMas6Egvwe2Ibr9EvJarrZaEWQ/edit';
 
 const ABAS = { atletas: 'Atletas', feedbacks: 'Feedbacks', drills: 'Drills' };
-const LOGO_SRC  = 'logo.png';
-const CACHE_KEY = 'imperadores_cache_v1';
+const LOGO_SRC   = 'logo.png';
+const CACHE_KEY  = 'imperadores_cache_v2';
+const VISTOS_KEY = 'imperadores_vistos_v1';
 
 const CATEGORIAS = {
   positivo:    { label: 'Ponto positivo',   filtro: 'Positivos',  cor: '#22c55e' },
@@ -192,6 +211,17 @@ const normalizar = s => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '')
   .toLowerCase().replace(/\s+/g, ' ').trim();
 
 const pad2 = n => String(n).padStart(2, '0');
+const plural = (n, palavra) => `${n} ${palavra}${n === 1 ? '' : 's'}`;
+
+// Hash curto e estável (FNV-1a) para identificar cada feedback/drill sem precisar de coluna de ID
+function hash(texto) {
+  let h = 2166136261;
+  for (let i = 0; i < texto.length; i++) {
+    h ^= texto.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(36);
+}
 
 function iniciais(nome) {
   const texto = String(nome ?? '');
@@ -225,17 +255,28 @@ function idCategoria(valor) {
 
 const porDataDesc = (a, b) => (b.data || '').localeCompare(a.data || '');
 
-/** Reconhece links do YouTube/Instagram. Retorna { tipo, embed } ou null se o link for inválido. */
+/**
+ * Reconhece links do YouTube/Instagram. Retorna null se o link for inválido, ou:
+ * { tipo, embed (player), link (endereço "limpo" para abrir no app), thumb (miniatura, só YouTube) }
+ */
 function parseVideo(url) {
   const u = String(url ?? '').trim();
 
   const yt = u.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|v\/|shorts\/|live\/))([\w-]{11})/);
-  if (yt) return { tipo: 'youtube', embed: `https://www.youtube.com/embed/${yt[1]}?autoplay=1&rel=0` };
+  if (yt) {
+    const id = yt[1];
+    return {
+      tipo:  'youtube',
+      embed: `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`,
+      link:  `https://www.youtube.com/watch?v=${id}`,
+      thumb: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
+    };
+  }
 
   const ig = u.match(/instagram\.com\/(?:[\w.]+\/)?(p|reels?|tv)\/([\w-]+)/);
   if (ig) {
-    const caminho = ig[1].startsWith('reel') ? 'reel' : 'p';
-    return { tipo: 'instagram', embed: `https://www.instagram.com/${caminho}/${ig[2]}/embed` };
+    const base = `https://www.instagram.com/${ig[1].startsWith('reel') ? 'reel' : 'p'}/${ig[2]}/`;
+    return { tipo: 'instagram', embed: base + 'embed', link: base, thumb: '' };
   }
   return null;
 }
@@ -338,26 +379,35 @@ async function buscarPlanilha() {
 
     feedbacks: feedbacks
       .filter(f => f.atleta && (f.titulo || f.texto))
-      .map(f => ({
-        atletaId:  normalizar(f.atleta),
-        data:      paraISO(f.data),
-        dataTexto: f.data || '',
-        categoria: idCategoria(f.categoria),
-        treinador: f.treinador || '',
-        titulo:    f.titulo || '',
-        texto:     f.texto || '',
-      }))
+      .map(f => {
+        const atletaId = normalizar(f.atleta);
+        return {
+          id:        'f' + hash([atletaId, f.data, f.titulo, f.texto].join('|')),
+          atletaId,
+          data:      paraISO(f.data),
+          dataTexto: f.data || '',
+          categoria: idCategoria(f.categoria),
+          treinador: f.treinador || '',
+          titulo:    f.titulo || '',
+          texto:     f.texto || '',
+        };
+      })
       .reverse(), // linhas mais de baixo (mais novas) primeiro quando a data empata
 
     drills: drills
       .filter(d => d.atleta && d.link)
-      .map((d, i) => ({
-        id:       'd' + i,
-        atletaId: normalizar(d.atleta), // "Todos" = aparece para o time inteiro
-        titulo:   d.titulo || 'Drill',
-        url:      d.link,
-        tipo:     parseVideo(d.link)?.tipo || '',
-      })),
+      .map(d => {
+        const atletaId = normalizar(d.atleta); // "Todos" = aparece para o time inteiro
+        const video = parseVideo(d.link);
+        return {
+          id:     'd' + hash([atletaId, d.link, d.titulo].join('|')),
+          atletaId,
+          titulo: d.titulo || 'Drill',
+          url:    d.link,
+          tipo:   video?.tipo || '',
+          thumb:  video?.thumb || '',
+        };
+      }),
   };
 }
 
@@ -375,6 +425,22 @@ function salvarCache(dados) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify({ planilha: CONFIG.id, dados })); } catch { /* sem espaço/bloqueado: tudo bem */ }
 }
 
+/* ---------- O que cada atleta já viu neste aparelho (para o selo "Novo") ---------- */
+function lerVistos() {
+  try {
+    const v = JSON.parse(localStorage.getItem(VISTOS_KEY));
+    return v && typeof v === 'object' && !Array.isArray(v) ? v : {};
+  } catch {
+    return {};
+  }
+}
+
+function marcarVistos(atletaId, ids) {
+  const vistos = lerVistos();
+  vistos[atletaId] = ids;
+  try { localStorage.setItem(VISTOS_KEY, JSON.stringify(vistos)); } catch { /* sem problema */ }
+}
+
 /* =========================================================
    ESTADO
 ========================================================= */
@@ -387,6 +453,7 @@ const state = {
   view: 'select',        // 'select' | 'panel'
   atletaId: null,
   filtro: 'all',
+  vistosAoAbrir: null,   // Set com o que o atleta já tinha visto quando abriu o painel
 };
 
 function atualizar(patch) {
@@ -397,6 +464,29 @@ function atualizar(patch) {
 function navegar(patch) {
   atualizar(patch);
   window.scrollTo(0, 0);
+}
+
+function itensDoAtleta(atletaId) {
+  return {
+    feedbacks: DB.feedbacks.filter(f => f.atletaId === atletaId).sort(porDataDesc),
+    drills:    DB.drills.filter(d => d.atletaId === atletaId || d.atletaId === 'todos'),
+  };
+}
+
+const idsDe = ({ feedbacks, drills }) => [...feedbacks, ...drills].map(item => item.id);
+
+// Quantos itens o atleta ainda não viu. Sem registro neste aparelho = 0 (não sabemos quem é).
+function contarNovos(atletaId, vistos) {
+  if (!Array.isArray(vistos[atletaId])) return 0;
+  const jaViu = new Set(vistos[atletaId]);
+  return idsDe(itensDoAtleta(atletaId)).filter(id => !jaViu.has(id)).length;
+}
+
+function abrirPainel(id) {
+  const registro = lerVistos()[id];
+  // null = primeira vez deste atleta neste aparelho: nada aparece como "Novo"
+  state.vistosAoAbrir = Array.isArray(registro) ? new Set(registro) : null;
+  navegar({ view: 'panel', atletaId: id, filtro: 'all' });
 }
 
 let ultimaBusca = 0;
@@ -426,6 +516,7 @@ async function buscarEAtualizar() {
 ========================================================= */
 const modal       = document.getElementById('videoModal');
 const modalTitulo = document.getElementById('modalTitle');
+const modalLink   = document.getElementById('modalLink');
 const videoBox    = document.getElementById('videoContainer');
 
 function abrirVideo(drill) {
@@ -436,6 +527,10 @@ function abrirVideo(drill) {
   modal.classList.toggle('ig', ig);
   videoBox.className = `video-container ${ig ? 'ig' : 'yt'}`;
   modalTitulo.textContent = drill.titulo || 'Vídeo';
+
+  // Link reconstruído a partir do ID do vídeo (nunca o texto cru da planilha)
+  modalLink.href = video.link;
+  modalLink.textContent = `Abrir no ${ig ? 'Instagram' : 'YouTube'} ↗`;
 
   const iframe = document.createElement('iframe');
   iframe.src = video.embed;
@@ -453,10 +548,10 @@ modal.addEventListener('close', () => videoBox.replaceChildren());
 /* =========================================================
    COMPONENTES
 ========================================================= */
-const logo   = classe => `<img src="${LOGO_SRC}" alt="Imperadores" class="logo ${classe}">`;
-const avatar = nome => `<div class="avatar" aria-hidden="true">${esc(iniciais(nome))}</div>`;
-const vazio  = msg => `<div class="empty">${msg}</div>`;
-const stat   = (valor, legenda, classe = '') => `<div class="stat"><b class="${classe}">${valor}</b><small>${legenda}</small></div>`;
+const logo     = classe => `<img src="${LOGO_SRC}" alt="Imperadores" class="logo ${classe}">`;
+const avatar   = nome => `<div class="avatar" aria-hidden="true">${esc(iniciais(nome))}</div>`;
+const vazio    = msg => `<div class="empty">${msg}</div>`;
+const seloNovo = '<span class="selo-novo">Novo</span>';
 
 const avisoDesatualizado = () => state.desatualizado ? `
   <div class="aviso" role="status">
@@ -473,41 +568,49 @@ function hero(subtitulo) {
     </header>`;
 }
 
-function cardAtleta(a) {
+function cardAtleta(a, novos) {
   return `
-    <button class="athlete-card" data-action="abrirAtleta" data-id="${esc(a.id)}">
+    <button class="athlete-card${novos ? ' tem-novo' : ''}" data-action="abrirAtleta" data-id="${esc(a.id)}">
       ${avatar(a.nome)}
       <div class="athlete-info"><div class="athlete-name">${esc(a.nome)}</div></div>
+      ${novos ? `<span class="selo-novo">${novos === 1 ? '1 novo' : novos + ' novos'}</span>` : ''}
       <div class="arrow" aria-hidden="true">→</div>
     </button>`;
 }
 
 const TIPOS_VIDEO = {
-  youtube:   { classe: 'yt', icone: '▶', nome: 'YouTube' },
-  instagram: { classe: 'ig', icone: '◎', nome: 'Instagram' },
+  youtube:   { classe: 'yt', nome: 'YouTube' },
+  instagram: { classe: 'ig', nome: 'Instagram' },
 };
 
-function cardDrill(d) {
-  const t = TIPOS_VIDEO[d.tipo] || { classe: '', icone: '?', nome: 'Link inválido' };
+const ICONE_PLAY = '<span class="play"><svg width="11" height="13" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0L12 7L0 14V0Z"/></svg></span>';
+
+function cardDrill(d, novo) {
+  const t = TIPOS_VIDEO[d.tipo];
+  // A URL da miniatura é montada só com o ID do vídeo (letras, números, - e _), então é segura no style
+  const thumb = t
+    ? `<div class="drill-thumb ${t.classe}"${d.thumb ? ` style="background-image:url('${d.thumb}')"` : ''}>${ICONE_PLAY}</div>`
+    : '<div class="drill-thumb invalido">?</div>';
+
   return `
     <button class="drill-card" data-action="abrirDrill" data-id="${esc(d.id)}">
-      <div class="drill-icon ${t.classe}" aria-hidden="true">${t.icone}</div>
+      ${thumb}
       <div class="drill-info">
         <div class="drill-title">${esc(d.titulo)}</div>
-        <div class="drill-type">${t.nome}${d.atletaId === 'todos' ? ' · Time todo' : ''}</div>
-      </div>
-      <div class="drill-play" aria-hidden="true">
-        <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M0 0L12 7L0 14V0Z"/></svg>
+        <div class="drill-meta">
+          ${novo ? seloNovo : ''}
+          <span class="drill-type">${t ? t.nome : 'Link inválido'}${d.atletaId === 'todos' ? ' · Time todo' : ''}</span>
+        </div>
       </div>
     </button>`;
 }
 
-function cardFeedback(f) {
+function cardFeedback(f, { novo = false, destaque = false } = {}) {
   const cat = CATEGORIAS[f.categoria] || CATEGORIAS.positivo;
   return `
-    <article class="fb-card" style="--cat:${cat.cor}">
+    <article class="fb-card${destaque ? ' destacado' : ''}" style="--cat:${cat.cor}">
       <div class="fb-head">
-        <span class="badge">${cat.label}</span>
+        <div class="fb-tags"><span class="badge">${cat.label}</span>${novo ? seloNovo : ''}</div>
         <span class="fb-date">${esc(f.data ? fmtData(f.data) : f.dataTexto)}</span>
       </div>
       ${f.titulo ? `<h3 class="fb-title">${esc(f.titulo)}</h3>` : ''}
@@ -520,8 +623,9 @@ function cardFeedback(f) {
    TELAS
 ========================================================= */
 function telaSelecao() {
+  const vistos = lerVistos();
   const lista = DB.atletas.length
-    ? `<div class="athlete-grid">${DB.atletas.map(cardAtleta).join('')}</div>`
+    ? `<div class="athlete-grid">${DB.atletas.map(a => cardAtleta(a, contarNovos(a.id, vistos))).join('')}</div>`
     : vazio('Nenhum atleta na planilha ainda.');
 
   return `
@@ -539,18 +643,50 @@ function telaPainel() {
     return telaSelecao();
   }
 
-  const feedbacks = DB.feedbacks.filter(f => f.atletaId === atleta.id).sort(porDataDesc);
-  const drills    = DB.drills.filter(d => d.atletaId === atleta.id || d.atletaId === 'todos');
+  const itens = itensDoAtleta(atleta.id);
+  const ids = idsDe(itens);
+  if (!state.vistosAoAbrir) state.vistosAoAbrir = new Set(ids);
+  marcarVistos(atleta.id, ids);
+  const ehNovo = item => !state.vistosAoAbrir.has(item.id);
+
+  const { feedbacks, drills } = itens;
+  const [ultimo, ...anteriores] = feedbacks;
   const destaques = feedbacks.filter(f => f.categoria === 'destaque').length;
-  const filtrados = state.filtro === 'all' ? feedbacks : feedbacks.filter(f => f.categoria === state.filtro);
+  const resumo = feedbacks.length
+    ? plural(feedbacks.length, 'feedback') + (destaques ? ` · ${plural(destaques, 'destaque')}` : '')
+    : 'Nenhum feedback ainda';
 
-  const chips = FILTROS.map(c => `
-    <button class="chip ${state.filtro === c.id ? 'active' : ''}" data-action="filtrar" data-filtro="${c.id}"
-      aria-pressed="${state.filtro === c.id}">${c.label}</button>`).join('');
+  // 1) Último feedback em destaque
+  const secaoUltimo = ultimo ? `
+    <h3 class="section-title">Último feedback</h3>
+    ${cardFeedback(ultimo, { novo: ehNovo(ultimo), destaque: true })}`
+    : vazio('Ainda não há feedbacks para você.<br>Eles aparecem aqui assim que o treinador escrever.');
 
+  // 2) Drills
   const secaoDrills = drills.length ? `
-    <h3 class="section-title">Drills / Treinos em Vídeo</h3>
-    <div class="drills-grid">${drills.map(cardDrill).join('')}</div>` : '';
+    <h3 class="section-title">Drills / Treinos em vídeo</h3>
+    <div class="drills-grid">${drills.map(d => cardDrill(d, ehNovo(d))).join('')}</div>` : '';
+
+  // 3) Histórico (sem repetir o último), com contagem em cada filtro
+  let secaoAnteriores = '';
+  if (anteriores.length) {
+    const quantos = id => id === 'all' ? anteriores.length : anteriores.filter(f => f.categoria === id).length;
+    const chips = FILTROS.map(c => {
+      const n = quantos(c.id);
+      const ativo = state.filtro === c.id;
+      return `
+        <button class="chip${ativo ? ' active' : ''}${n ? '' : ' zero'}" data-action="filtrar" data-filtro="${c.id}"
+          aria-pressed="${ativo}">${c.label}<span class="chip-n">${n}</span></button>`;
+    }).join('');
+    const filtrados = state.filtro === 'all' ? anteriores : anteriores.filter(f => f.categoria === state.filtro);
+
+    secaoAnteriores = `
+      <h3 class="section-title">Feedbacks anteriores</h3>
+      <div class="chips">${chips}</div>
+      ${filtrados.length
+        ? filtrados.map(f => cardFeedback(f, { novo: ehNovo(f) })).join('')
+        : vazio('Nenhum feedback anterior nesta categoria.')}`;
+  }
 
   return `
   <div class="wrap">
@@ -560,20 +696,16 @@ function telaPainel() {
       ${logo('mini-logo')}
       <div class="id-block">
         ${avatar(atleta.nome)}
-        <h2>${esc(atleta.nome)}</h2>
+        <div class="id-text">
+          <h2>${esc(atleta.nome)}</h2>
+          <div class="id-sub">${resumo}</div>
+        </div>
       </div>
     </div>
 
-    <div class="stats">
-      ${stat(feedbacks.length, 'Feedbacks Recebidos')}
-      ${stat(destaques, 'Destaques', 'val-purple')}
-    </div>
-
+    ${secaoUltimo}
     ${secaoDrills}
-
-    <h3 class="section-title">Histórico de feedbacks</h3>
-    <div class="chips">${chips}</div>
-    ${filtrados.length ? filtrados.map(cardFeedback).join('') : vazio('Nenhum feedback nesta categoria ainda.')}
+    ${secaoAnteriores}
   </div>`;
 }
 
@@ -628,7 +760,7 @@ function render() {
    EVENTOS (delegação: nada de onclick inline no HTML gerado)
 ========================================================= */
 const ACOES = {
-  abrirAtleta:  ({ id })     => navegar({ view: 'panel', atletaId: id, filtro: 'all' }),
+  abrirAtleta:  ({ id })     => abrirPainel(id),
   voltar:       ()           => navegar({ view: 'select', atletaId: null }),
   filtrar:      ({ filtro }) => atualizar({ filtro }),
   abrirDrill:   ({ id })     => abrirVideo(DB.drills.find(d => d.id === id)),
